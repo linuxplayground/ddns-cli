@@ -337,13 +337,19 @@ class DDnsCli(object):
         resolver.nameservers = [ddns_args['server']]
 
         debug("resolving(%s, A)" % self.args.rrname)
-        answers = resolver.query(self.args.rrname, 'A')
+        try:
+            answers = resolver.query(self.args.rrname, 'A')
+        except:
+            answers = []
         for rdata in answers:
             ips.append({'type': 'A', 'value': rdata.address})
             debug("(%s, A) -> %s" % (self.args.rrname, rdata.address))
 
         debug("resolving(%s, AAAA)" % self.args.rrname)
-        answers = resolver.query(self.args.rrname, 'AAAA')
+        try:
+            answers = resolver.query(self.args.rrname, 'AAAA')
+        except:
+            ansers = []
         for rdata in answers:
             ips.append({'type': 'AAAA', 'value':rdata.address})
 
